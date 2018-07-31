@@ -1,0 +1,12 @@
+---
+# tasks file for dev-sec.ansible-tomcat-hardening
+
+- name: install apache tomcat
+  package:
+    name: tomcat
+
+- name: start and enable tomcat
+  service:
+    name: "tomcat"
+    state: started
+    enabled: true
