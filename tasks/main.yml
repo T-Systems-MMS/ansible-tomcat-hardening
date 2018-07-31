@@ -5,8 +5,33 @@
   package:
     name: tomcat
 
-- name: start and enable tomcat
-  service:
-    name: "tomcat"
-    state: started
-    enabled: true
+#- name: start and enable tomcat
+#  service:
+#    name: "tomcat"
+#    state: started
+#    enabled: true
+
+- name: change permissions of tomcat configuration-files
+  file:
+    path: "{{ item }}"
+    owner: "tomcat"
+    group: "tomcat"
+    mode: "0640"
+  loop:
+    - "/etc/tomcat/server.xml"
+    - "/etc/tomcat/context.xml"
+    - "/etc/tomcat/web.xml"
+    - "/etc/tomcat/tomcat-users.xml"
+- name: change permissions of tomcat-directories
+  file:
+    path: "{{ item }}"
+    owner: "tomcat"
+    group: "tomcat"
+    mode: "0750"
+  loop:
+    - "/usr/share/tomcat/"
+    - "/usr/share/tomcat/conf/"
+    - "/etc/tomcat"
+    - "/var/cache/tomcat"
+    - "/var/log/tomcat"
+    - "/var/lib/tomcat"
